@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className="home">
       {error && <h2 className="error">{error}</h2>}
-      {isLoading && <p className="loading">IsLOading...</p>}
+      {isLoading && <p className="loading">isLoading...</p>}
       {data && data.map((recipe) => (
         <h2 className="card">{recipe.title}</h2>
       ))}
