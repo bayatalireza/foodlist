@@ -10,7 +10,7 @@ export default function Home() {
       {error && <h2 className="error">{error}</h2>}
       {isLoading && <p className="loading">isLoading...</p>}
       {data && data.map((recipe) => (
-        <h2 className="card">{recipe.title}</h2>
+        <h2 className="card" key={recipe.id}>{recipe.title}</h2>
       ))}
     </div>
   )
