@@ -1,0 +1,39 @@
+
+.recipe {
+    width: 70%;
+    height: fit-content;
+    margin: 40px auto;
+    text-align: center;
+    background: #cecaca;
+    padding: 40px;
+    box-sizing: border-box;
+  }
+
+.recipe .page-title {
+    background: #6d6a6a;
+    align-self: center;
+    border-radius: 5px;
+    margin: 25px;
+    padding: 10px;
+}
+  .recipe ul {
+    display: flex;
+    padding: 0;
+    justify-content: center;
+    margin: 10px;
+  }
+  .recipe li {
+    list-style-type: none;
+    margin-right: 10px;
+    color: #777;
+  }
+  .recipe li::after {
+    content: ",";
+  }
+  .recipe li:last-child::after {
+    content: ".";
+  }
+  .method {
+    text-align: left;
+    line-height: 1.5em;
+  }
