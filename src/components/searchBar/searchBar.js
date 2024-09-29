@@ -11,6 +11,7 @@ export default function SearchBar() {
     e.preventDefault()
     navigate(`/search?q=${term}`)
   }
+
   return (
     <div className="search-bar">
       <form onSubmit={handleSubmit}>
