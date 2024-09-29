@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./Create.css";
 import { useFetch } from "../../hooks/useFetch";
-import { useNavigate } from "react-router-dom";
 
 export default function Create() {
   const [title, setTitle] = useState("");
@@ -9,21 +8,13 @@ export default function Create() {
   const [cookingTime, setCookingTime] = useState("");
   const [newIngredient, setNewIngredient] = useState("");
   const [ingredients, setIngredients] = useState([]);
-  const { postData, data, error } = useFetch(
-    "http://localhost:3000/recipes",
-    "POST"
-  );
-
-  const navigate = useNavigate();
+  const{postData, data, error} = useFetch("http://localhost:3000/recipes", "POST")
+    
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    postData({
-      title,
-      ingredients,
-      method,
-      cookingTime: cookingTime + " minutes",
-    });
+      postData({title, ingredients, method, cookingTime: cookingTime + " minutes"
+    })
   };
 
   const handleAdd = (e) => {
@@ -33,12 +24,6 @@ export default function Create() {
     }
     setNewIngredient("");
   };
-
-  useEffect(() => {
-    if (data) {
-      navigate("/")
-    }
-  }, [data]);
 
   return (
     <div className="create">
@@ -62,11 +47,11 @@ export default function Create() {
               onChange={(e) => setNewIngredient(e.target.value)}
               value={newIngredient}
             />
-            <button onClick={handleAdd}>Add</button>
+            <button  onClick={handleAdd}>Add</button>
           </div>
         </label>
         <p>
-          Current Ingredients:
+          Current Ingredients:{" "}
           {ingredients.map((event) => (
             <em key={event}>{event}, </em>
           ))}
