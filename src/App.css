@@ -2,3 +2,6 @@
   text-align: center;
 }
 
+.App.dark{
+  background: rgb(39, 38, 39);
+}
