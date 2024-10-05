@@ -1,6 +1,9 @@
 import { useState } from "react";
 import "./Create.css";
-import { useFetch } from "../../hooks/useFetch";
+
+import { addDoc, collection} from "firebase/firestore";
+import { db } from "../../firebase/Config";
+import { navigate, useNavigate } from "react-router-dom";
 
 export default function Create() {
   const [title, setTitle] = useState("");
@@ -8,13 +11,21 @@ export default function Create() {
   const [cookingTime, setCookingTime] = useState("");
   const [newIngredient, setNewIngredient] = useState("");
   const [ingredients, setIngredients] = useState([]);
-  const{postData, data, error} = useFetch("http://localhost:3000/recipes", "POST")
     
+  const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-      postData({title, ingredients, method, cookingTime: cookingTime + " minutes"
-    })
+      const doc={title, ingredients, method, cookingTime: cookingTime + " minutes"
+    }
+    try {
+      const ref = collection(db, 'recipes')
+      await addDoc(ref, doc)
+      navigate("/")
+    } catch (err) {
+      return err
+      
+    }
   };
 
   const handleAdd = (e) => {
