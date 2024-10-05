@@ -1,15 +1,36 @@
 import { useParams } from "react-router-dom"
-import { useFetch } from "../../hooks/useFetch"
+
+import { db } from "../../firebase/Config"
 import "./Recipe.css"
 import { useTheme } from "../../hooks/useTheme"
+import { useEffect, useState } from "react"
+import { doc, getDoc } from "firebase/firestore"
 
 export default function Recipe() {
 
-  const {mode} = useTheme()
+  const [isLoading, setIsLoading] = useState(false)
+  const [recipe, setRecipe] = useState(null)
+  const [error, setError] = useState(false)
 
+  const {mode} = useTheme()
   const{id} = useParams()
-  const url = "http://localhost:3000/recipes/" + id
-  const{data: recipe, isLoading, error} = useFetch(url)
+
+  useEffect(()=>{
+    setIsLoading(true)
+    
+    const ref = doc(db, 'recipes', id )
+    getDoc(ref)
+    .then(doc=>{
+      if(doc.empty){
+        setIsLoading(false)
+        setError("No recipe to load...")
+      }else{
+        setIsLoading(false)
+        setRecipe(doc.data())
+      }
+    })
+  }, [])
+
   return (
     <div className={`recipe ${mode}`}>
       {error && <p className="error">{error}</p>}

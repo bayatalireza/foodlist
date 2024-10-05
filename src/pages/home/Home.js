@@ -1,10 +1,37 @@
+import { useEffect, useState } from "react"
 import RecipeList from "../../components/recipeList/RecipeList"
-import { useFetch } from "../../hooks/useFetch"
+import { db } from "../../firebase/Config"
+
 import "./Home.css"
+import { collection, getDocs } from "firebase/firestore"
 
 export default function Home() {
 
-  const{data, isLoading, error} = useFetch("http://localhost:3000/recipes")
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(false)
+  const [data, setData] = useState(null)
+
+  useEffect(()=> {
+    setIsLoading(true)
+
+    const ref = collection(db, 'recipes')
+    getDocs(ref)
+      .then((snapshot)=>{
+        if(snapshot.empty){
+          setError("No recipes to load...")
+          setIsLoading(false)
+        }else{
+          let result = []
+          snapshot.docs.forEach((doc)=>{
+            result.push({id: doc.id, ...doc.data()})
+            
+          })
+          setData(result)
+          setIsLoading(false)
+        }
+        
+      })
+  }, [])
 
   return (
     <div className="home">
