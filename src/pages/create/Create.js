@@ -23,7 +23,8 @@ export default function Create() {
       await addDoc(ref, doc)
       navigate("/")
     } catch (err) {
-      return err
+      return console.log(err);
+      
       
     }
   };
